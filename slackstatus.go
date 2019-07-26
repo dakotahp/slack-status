@@ -10,7 +10,6 @@ import(
   "github.com/spf13/viper"
 )
 
-
 const holidayEmoji string = ":palm_tree:"
 const holidayStatus string = "OOO"
 
@@ -68,17 +67,6 @@ func main() {
     }
   }
 
-  workspaces := viper.GetStringSlice("workspaces")
-
-  for i := 0; i < len(workspaces); i++ {
-    wsp := Workspace {
-      ShortName: viper.GetString("workspace_credentials." + workspaces[i] + ".short_name"),
-      Token: viper.GetString("workspace_credentials." + workspaces[i] + ".token"),
-    }
-
-    allWorkspaces = append(allWorkspaces, wsp)
-  }
-
   if len(os.Args) == 2 {
     action = os.Args[1]
   } else {
@@ -86,13 +74,7 @@ func main() {
     action = os.Args[2]
   }
 
-  if inputWorkspace != "" {
-    for _, wsp := range allWorkspaces {
-      if wsp.ShortName == inputWorkspace {
-        selectedWorkspace = wsp
-      }
-    }
-  }
+  loadWorkspaces(inputWorkspace)
 
   switch {
     case action == "offline":
@@ -109,6 +91,27 @@ func main() {
       TestAuth()
     default:
       fmt.Println("Enter offline, work, wfh, lunch");
+  }
+}
+
+func loadWorkspaces(inputWorkspace string) {
+  workspaces := viper.GetStringSlice("workspaces")
+
+  for i := 0; i < len(workspaces); i++ {
+    wsp := Workspace {
+      ShortName: viper.GetString("workspace_credentials." + workspaces[i] + ".short_name"),
+      Token: viper.GetString("workspace_credentials." + workspaces[i] + ".token"),
+    }
+
+    allWorkspaces = append(allWorkspaces, wsp)
+  }
+
+  if inputWorkspace != "" {
+    for _, wsp := range allWorkspaces {
+      if wsp.ShortName == inputWorkspace {
+        selectedWorkspace = wsp
+      }
+    }
   }
 }
 
