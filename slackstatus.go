@@ -27,12 +27,27 @@ const presenceUri string = "/users.setPresence"
 const statusUri string = "/users.profile.set"
 
 var selectedWorkspace Workspace
-var allWorkspaces []Workspace
+var selectedStatus Status
+
+//
+// Config Schemas
+//
+
+type Status struct {
+  Emoji string `yaml:"emoji"`
+  Presence string `yaml:"presence"`
+  ShortName string `yaml:"short_name"`
+  StatusText string `yaml:"status"`
+}
+
+var allStatuses []Status
 
 type Workspace struct {
   ShortName string `yaml:"short_name"`
   Token string `yaml:"token"`
 }
+
+var allWorkspaces []Workspace
 
 //
 // JSON Payloads
@@ -75,32 +90,36 @@ func main() {
   }
 
   loadWorkspaces(inputWorkspace)
+  loadStatuses(action)
 
-  switch {
-    case action == "offline":
-      LeavingTime()
-    case action == "work":
-      WorkTime()
-    case action == "wfh":
-      WorkFromHomeTime()
-    case action == "ooo":
-      HolidayTime(os.Args[3])
-    case action == "lunch":
-      LunchTime()
-    case action == "test":
-      TestAuth()
-    default:
-      fmt.Println("Enter offline, work, wfh, lunch");
-  }
+  SetStatus(selectedStatus.StatusText, selectedStatus.Emoji)
+  SetPresence(selectedStatus.Presence)
+
+  // switch {
+  //   case action == "offline":
+  //     LeavingTime()
+  //   case action == "work":
+  //     WorkTime()
+  //   case action == "wfh":
+  //     WorkFromHomeTime()
+  //   case action == "ooo":
+  //     HolidayTime(os.Args[3])
+  //   case action == "lunch":
+  //     LunchTime()
+  //   case action == "test":
+  //     TestAuth()
+  //   default:
+  //     fmt.Println("Enter offline, work, wfh, lunch");
+  // }
 }
 
 func loadWorkspaces(inputWorkspace string) {
-  workspaces := viper.GetStringSlice("workspaces")
+  configWorkspaces := viper.GetStringSlice("workspaces")
 
-  for i := 0; i < len(workspaces); i++ {
-    wsp := Workspace {
-      ShortName: viper.GetString("workspace_credentials." + workspaces[i] + ".short_name"),
-      Token: viper.GetString("workspace_credentials." + workspaces[i] + ".token"),
+  for i := 0; i < len(configWorkspaces); i++ {
+    wsp := Workspace{
+      ShortName: viper.GetString("workspace_credentials." + configWorkspaces[i] + ".short_name"),
+      Token: viper.GetString("workspace_credentials." + configWorkspaces[i] + ".token"),
     }
 
     allWorkspaces = append(allWorkspaces, wsp)
@@ -112,6 +131,34 @@ func loadWorkspaces(inputWorkspace string) {
         selectedWorkspace = wsp
       }
     }
+  }
+}
+
+func loadStatuses(action string) {
+  configStatuses := viper.GetStringSlice("all_statuses")
+  fmt.Println("found statuses", configStatuses)
+
+  for i := 0; i < len(configStatuses); i++ {
+    fmt.Println("specified action", action)
+    fmt.Println("Looking for corresponding shortname", viper.GetString("statuses." + configStatuses[i] + ".short_name"))
+    fmt.Println("Yaml key not found:", "statuses." + configStatuses[i] + ".short_name")
+    fmt.Println("\n")
+
+    if viper.GetString("statuses." + configStatuses[i] + ".short_name") == action {
+      selectedStatus = Status{
+        Emoji: viper.GetString("statuses." + configStatuses[i] + ".emoji"),
+        Presence: viper.GetString("statuses." + configStatuses[i] + ".presence"),
+        ShortName: viper.GetString("statuses." + configStatuses[i] + ".short_name"),
+        StatusText: viper.GetString("statuses." + configStatuses[i] + ".status_text"),
+      }
+    }
+
+    allStatuses = append(allStatuses, selectedStatus)
+  }
+
+  if (Status{}) == selectedStatus {
+    fmt.Println("Status not found:", action)
+    os.Exit(1)
   }
 }
 

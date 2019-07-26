@@ -1,11 +1,30 @@
-actions:
-  party:
-    emoji: ':party:'
-    status: Party hardy
+statuses:
+  holiday:
+    emoji: ':palm_tree:'
+    presence: away
+    short_name: ooo
+    status_text: On holiday
+  lunch:
+    emoji: ':burrito:'
+    presence: away
+    short_name: lunch
+    status_text: Out to lunch
+  at_work:
+    emoji: ':male-technologist::skin-tone-3:'
+    presence: auto
+    short_name: work
+    status_text: Hard at work
+  wfh:
+    emoji: ':house_with_garden:'
+    presence: auto
+    short_name: wfh
+    status_text: Working from home
 
-custom_actions:
-  - party
+all_statuses:
   - holiday
+  - lunch
+  - at_work
+  - wfh
 
 workspaces:
   - work
