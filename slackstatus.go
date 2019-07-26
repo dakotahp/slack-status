@@ -10,7 +10,6 @@ import(
   "github.com/spf13/viper"
 )
 
-const baseUri string = "https://slack.com/api"
 
 const holidayEmoji string = ":palm_tree:"
 const holidayStatus string = "OOO"
@@ -24,6 +23,7 @@ const workStatus string = "Hard at work"
 const wfhEmoji string = ":house_with_garden:"
 const wfhStatus string = "Working from home"
 
+const baseUri string = "https://slack.com/api"
 const presenceUri string = "/users.setPresence"
 const statusUri string = "/users.profile.set"
 
@@ -35,10 +35,9 @@ type Workspace struct {
   Token string `yaml:"token"`
 }
 
-type Workspaces struct {
-  Objects []Workspace
-}
-
+//
+// JSON Payloads
+//
 type PresencePayload struct {
   Presence string `json:"presence"`
 }
@@ -96,7 +95,7 @@ func main() {
   }
 
   switch {
-  case action == "offline":
+    case action == "offline":
       LeavingTime()
     case action == "work":
       WorkTime()
