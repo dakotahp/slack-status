@@ -1,0 +1,20 @@
+actions:
+  party:
+    emoji: ':party:'
+    status: Party hardy
+
+custom_actions:
+  - party
+  - holiday
+
+workspaces:
+  - work
+  - office
+
+workspace_credentials:
+  work:
+    token: xoxp-123
+    short_name: wk
+  office:
+    token: xoxp-123
+    short_name: of
