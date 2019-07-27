@@ -94,23 +94,6 @@ func main() {
 
   SetStatus(selectedStatus.StatusText, selectedStatus.Emoji)
   SetPresence(selectedStatus.Presence)
-
-  // switch {
-  //   case action == "offline":
-  //     LeavingTime()
-  //   case action == "work":
-  //     WorkTime()
-  //   case action == "wfh":
-  //     WorkFromHomeTime()
-  //   case action == "ooo":
-  //     HolidayTime(os.Args[3])
-  //   case action == "lunch":
-  //     LunchTime()
-  //   case action == "test":
-  //     TestAuth()
-  //   default:
-  //     fmt.Println("Enter offline, work, wfh, lunch");
-  // }
 }
 
 func loadWorkspaces(inputWorkspace string) {
@@ -136,14 +119,8 @@ func loadWorkspaces(inputWorkspace string) {
 
 func loadStatuses(action string) {
   configStatuses := viper.GetStringSlice("all_statuses")
-  fmt.Println("found statuses", configStatuses)
 
   for i := 0; i < len(configStatuses); i++ {
-    fmt.Println("specified action", action)
-    fmt.Println("Looking for corresponding shortname", viper.GetString("statuses." + configStatuses[i] + ".short_name"))
-    fmt.Println("Yaml key not found:", "statuses." + configStatuses[i] + ".short_name")
-    fmt.Println("\n")
-
     if viper.GetString("statuses." + configStatuses[i] + ".short_name") == action {
       selectedStatus = Status{
         Emoji: viper.GetString("statuses." + configStatuses[i] + ".emoji"),
@@ -185,31 +162,6 @@ func TestAuth() {
   }
 
   fmt.Printf("%s", b)
-}
-
-func HolidayTime(leaveTerm string) {
-  SetStatus(holidayStatus + " " + leaveTerm, holidayEmoji)
-  SetPresence("away")
-}
-
-func LeavingTime() {
-  SetStatus("", "")
-  SetPresence("away")
-}
-
-func LunchTime() {
-  SetStatus(lunchStatus, lunchEmoji)
-  SetPresence("away")
-}
-
-func WorkTime() {
-  SetStatus(workStatus, workEmoji)
-  SetPresence("auto")
-}
-
-func WorkFromHomeTime() {
-  SetStatus(wfhStatus, wfhEmoji)
-  SetPresence("auto")
 }
 
 func SetStatus(statusText string, statusEmoji string) {
