@@ -10,18 +10,6 @@ import(
   "github.com/spf13/viper"
 )
 
-const holidayEmoji string = ":palm_tree:"
-const holidayStatus string = "OOO"
-
-const lunchEmoji string = ":sandwich:"
-const lunchStatus string = "Out to lunch"
-
-const workEmoji string = ":male-technologist::skin-tone-3:"
-const workStatus string = "Hard at work"
-
-const wfhEmoji string = ":house_with_garden:"
-const wfhStatus string = "Working from home"
-
 const baseUri string = "https://slack.com/api"
 const presenceUri string = "/users.setPresence"
 const statusUri string = "/users.profile.set"

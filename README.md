@@ -2,4 +2,5 @@
 
 ## To Do
 
-- [ ] Support configs
+- [ ] Multi-thread requests
+- [x] Support configs
