@@ -26,10 +26,6 @@ all_statuses:
   - at_work
   - wfh
 
-workspaces:
-  - work
-  - office
-
 workspace_credentials:
   work:
     token: xoxp-123

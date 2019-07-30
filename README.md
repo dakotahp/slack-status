@@ -16,7 +16,8 @@ or `slackstatus wfh` respectively.
 Put the `slackstatus` app from `bin/slackstatus` anywhere that is within your `$PATH`.
 
 The format for commands is `slackstatus [workspace] command` where `workspace` is an optional short
-name for the Slack workspace you want to change the status of. Omitting the workspace parameter will apply your status to _all_ of your workspaces in the config file.
+name for the Slack workspace you want to change the status of. Omitting the workspace parameter will
+apply your status to _all_ of your workspaces in the config file.
 
 `command` is your short name for your
 status, some of the defaults being:
