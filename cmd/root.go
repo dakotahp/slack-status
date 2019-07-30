@@ -179,15 +179,17 @@ func loadWorkspaces(inputWorkspace string) {
 }
 
 func loadStatuses(action string) {
-  configStatuses := viper.GetStringSlice("all_statuses")
+  configStatuses := viper.GetStringMapString("statuses")
 
-  for i := 0; i < len(configStatuses); i++ {
-    if viper.GetString("statuses." + configStatuses[i] + ".short_name") == action {
+  for k, _ := range configStatuses {
+    statusName := strings.TrimSuffix(k, ":")
+
+    if viper.GetString("statuses." + statusName + ".short_name") == action {
       selectedStatus = Status{
-        Emoji: viper.GetString("statuses." + configStatuses[i] + ".emoji"),
-        Presence: viper.GetString("statuses." + configStatuses[i] + ".presence"),
-        ShortName: viper.GetString("statuses." + configStatuses[i] + ".short_name"),
-        StatusText: viper.GetString("statuses." + configStatuses[i] + ".status_text"),
+        Emoji: viper.GetString("statuses." + statusName + ".emoji"),
+        Presence: viper.GetString("statuses." + statusName + ".presence"),
+        ShortName: viper.GetString("statuses." + statusName + ".short_name"),
+        StatusText: viper.GetString("statuses." + statusName + ".status_text"),
       }
     }
 

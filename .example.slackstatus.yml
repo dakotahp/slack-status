@@ -10,26 +10,20 @@ statuses:
     short_name: lunch
     status_text: Out to lunch
   at_work:
-    emoji: ':male-technologist::skin-tone-3:'
+    emoji:
     presence: auto
     short_name: work
-    status_text: Hard at work
+    status_text: ''
   wfh:
     emoji: ':house_with_garden:'
     presence: auto
     short_name: wfh
     status_text: Working from home
 
-all_statuses:
-  - holiday
-  - lunch
-  - at_work
-  - wfh
-
 workspace_credentials:
   work:
-    token: xoxp-123
-    short_name: wk
+    token: xoxp-1234
+    short_name: work
   office:
-    token: xoxp-123
-    short_name: of
+    token: xoxp-1234
+    short_name: personal

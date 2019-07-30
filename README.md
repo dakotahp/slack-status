@@ -30,6 +30,7 @@ status, some of the defaults being:
 ## To Do
 
 - [ ] Investigate integrating Cobra for better help output
+- [ ] Look into making statuses expire
 - [ ] Better output aside from raw request data
 - [ ] Multi-thread requests
 - [x] Support configs
