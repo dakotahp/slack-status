@@ -1,3 +1,3 @@
 #!/bin/zsh
 
-go build -o bin/slackstatus
+go build -ldflags="-s -w" -o bin/slackstatus
