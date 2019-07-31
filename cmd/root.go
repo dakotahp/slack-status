@@ -100,7 +100,7 @@ Default statuses available to use:
     loadWorkspaces(inputWorkspace)
     loadStatuses(action)
 
-    SetStatus(selectedStatus.StatusText, selectedStatus.Emoji)
+    SetStatus(selectedStatus)
     SetPresence(selectedStatus.Presence)
   },
 }
@@ -227,10 +227,10 @@ func TestAuth() {
   fmt.Printf("%s", b)
 }
 
-func SetStatus(statusText string, statusEmoji string) {
+func SetStatus(s Status) {
   profileData := ProfilePayload{
-    StatusText: statusText,
-    StatusEmoji: statusEmoji,
+    StatusText: s.StatusText,
+    StatusEmoji: s.Emoji,
   }
 
   statusData := StatusPayload{ Profile: profileData }
